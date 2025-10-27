@@ -73,9 +73,16 @@ pipeline {
                         dir('proxmox-backup') {
                             git 'git://git.proxmox.com/git/proxmox-backup.git'
                             sh '''
-                                . "$HOME/.cargo/env" &&
-                                rm -rf .cargo &&
-                                sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml &&
+                                . "$HOME/.cargo/env"
+                                rm -rf .cargo
+                                sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
+                                echo "USER: $(whoami)"
+                                echo "HOME: $HOME"
+                                echo "CARGO_HOME: $CARGO_HOME"
+                                echo "CARGO CONFIG:"
+                                cat $HOME/.cargo/config.toml || true
+                                echo "Environment variables:"
+                                env | grep CARGO || true
                                 cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
