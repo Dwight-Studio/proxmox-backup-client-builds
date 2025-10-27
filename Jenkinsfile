@@ -15,24 +15,22 @@ pipeline {
                 echo "Found version ${VERSION}"
                 withCredentials([usernamePassword(credentialsId: '37caf116-0ecf-4870-b2a0-29ab0ebb0573', passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
                     script {
-                        RELEASE = sh (
-                            script: '''
-                            curl -L \
-                            -H "Accept: application/vnd.github+json" \
-                            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                            -H "X-GitHub-Api-Version: 2022-11-28" \
-                            https://api.github.com/repos/Dwight-Studio/proxmox-backup-client-builds/releases/tags/${VERSION}
-                            ''',
-                            returnStdout: true
-                        ).trim()
+                        def response = httpRequest(
+                            url: "https://api.github.com/repos/Dwight-Studio/proxmox-backup-client-builds/releases/tags/${VERSION}",
+                            httpMode: "GET",
+                            customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']],
+                            validResponseCodes: "200,404"
+                        )
+                        if (response.status == 404) {
+                            RUN_BUILD = true
+                        }
                     }
-                    echo "RES: ${RELEASE}"
                 }
             }
         }
         stage('Build on Rocky Linux 8') {
             when {
-                changelog '^bump version to [0-9-.]+$'
+                environment name: 'RUN_BUILD', value: 'true'
             }
             stages {
                 stage('Setup') {
