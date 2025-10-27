@@ -51,12 +51,6 @@ pipeline {
             }
             stages {
                 stage('Setup') {
-                    agent {
-                        docker { 
-                            image 'rockylinux:8-minimal'
-                            reuseNode true 
-                        }
-                    }
                     steps {
                         sh '''
                             dnf update -y &&
@@ -67,12 +61,6 @@ pipeline {
                     }
                 }
                 stage('Build') {
-                    agent {
-                        docker { 
-                            image 'rockylinux:8-minimal'
-                            reuseNode true 
-                        }
-                    }
                     steps {
                         dir('pathpatterns') {
                             git 'git://git.proxmox.com/git/pathpatterns.git'
