@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        docker { image 'rockylinux:8-minimal', reuseNode true }
+        docker { 
+            image 'rockylinux:8-minimal'
+            reuseNode true 
+        }
     }
     options {
         skipDefaultCheckout()
