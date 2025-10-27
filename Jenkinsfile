@@ -22,7 +22,11 @@ pipeline {
                             validResponseCodes: "200,404"
                         )
                         if (response.status == 404) {
-                            RUN_BUILD = true
+                            echo "Version ${VERSION} not found in releases, building..."
+                            RUN_BUILD = 'true'
+                        } else {
+                            echo "Version ${VERSION} found, aborting build."
+                            RUN_BUILD = 'false'
                         }
                     }
                 }
