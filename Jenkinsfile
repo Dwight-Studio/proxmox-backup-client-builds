@@ -7,7 +7,7 @@ pipeline {
             steps {
                 git 'git://git.proxmox.com/git/proxmox-backup.git'
                 script {
-                    VERSION = sh (
+                    env.VERSION = sh (
                         script: 'grep "^version =" Cargo.toml | sed -r "s/(version = |\\")//g"',
                         returnStdout: true
                     ).trim()
@@ -23,10 +23,10 @@ pipeline {
                         )
                         if (response.status == 404) {
                             echo "Version ${VERSION} not found in releases, building..."
-                            RUN_BUILD = 'true'
+                            env.RUN_BUILD = 'true'
                         } else {
                             echo "Version ${VERSION} found, aborting build."
-                            RUN_BUILD = 'false'
+                            env.RUN_BUILD = 'false'
                         }
                     }
                 }
