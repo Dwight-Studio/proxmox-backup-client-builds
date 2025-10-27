@@ -47,10 +47,10 @@ pipeline {
                 stage('Setup') {
                     steps {
                         sh '''
-                            dnf update -y &&
-                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel &&
-                            curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&
-                            . "$HOME/.cargo/env" &&
+                            dnf update -y
+                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel
+                            curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+                            . "$HOME/.cargo/env"
                             rustup override set 1.88.0
                         '''
                     }
@@ -76,13 +76,7 @@ pipeline {
                                 . "$HOME/.cargo/env"
                                 rm -rf .cargo
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
-                                echo "USER: $(whoami)"
-                                echo "HOME: $HOME"
-                                echo "CARGO_HOME: $CARGO_HOME"
-                                echo "CARGO CONFIG:"
-                                cat $HOME/.cargo/config.toml || true
-                                echo "Environment variables:"
-                                env | grep CARGO || true
+                                export CARGO_HOME="$HOME/.cargo"
                                 cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
