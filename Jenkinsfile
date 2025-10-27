@@ -77,6 +77,7 @@ pipeline {
                                 rm -rf .cargo &&
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml &&
                                 ls -la &&
+                                cat Cargo.toml &&
                                 cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
