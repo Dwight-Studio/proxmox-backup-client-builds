@@ -1,15 +1,16 @@
 pipeline {
-    agent {
-        docker { 
-            image 'rockylinux:8-minimal'
-            reuseNode true 
-        }
-    }
+    agent any
     options {
         skipDefaultCheckout()
     }
     stages {
         stage('Check if need build') {
+            agent {
+                docker { 
+                    image 'rockylinux:8-minimal'
+                    reuseNode true 
+                }
+            }
             steps {
                 git 'git://git.proxmox.com/git/proxmox-backup.git'
                 script {
@@ -39,6 +40,12 @@ pipeline {
             }
         }
         stage('Build on Rocky Linux 8') {
+            agent {
+                docker { 
+                    image 'rockylinux:8-minimal'
+                    reuseNode true 
+                }
+            }
             when {
                 environment name: 'RUN_BUILD', value: 'true'
             }
