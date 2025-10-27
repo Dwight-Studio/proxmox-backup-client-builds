@@ -76,11 +76,7 @@ pipeline {
                                 . "$HOME/.cargo/env" &&
                                 rm -rf .cargo &&
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml &&
-                                echo $CARGO_HOME &&
-                                cargo locate-project &&
-                                cargo metadata --offline &&
-                                cat /etc/cargo/config.toml &> /dev/null &&
-                                cat /usr/share/cargo/config.toml &> /dev/null &&
+                                unset CARGO_HOME &&
                                 cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
