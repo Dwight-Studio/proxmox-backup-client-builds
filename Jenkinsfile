@@ -2,6 +2,9 @@ pipeline {
     agent {
         docker { image 'rockylinux:8-minimal', reuseNode true }
     }
+    options {
+        skipDefaultCheckout()
+    }
     stages {
         stage('Check if need build') {
             steps {
