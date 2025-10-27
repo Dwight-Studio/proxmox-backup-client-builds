@@ -25,7 +25,7 @@ pipeline {
                         def response = httpRequest(
                             url: "https://api.github.com/repos/Dwight-Studio/proxmox-backup-client-builds/releases/tags/${VERSION}",
                             httpMode: "GET",
-                            customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: 'Bearer $GITHUB_TOKEN'], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']],
+                            customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: 'Bearer ${GITHUB_TOKEN}'], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']],
                             validResponseCodes: "200,404"
                         )
                         if (response.status == 404) {
