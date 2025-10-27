@@ -74,11 +74,9 @@ pipeline {
                             git 'git://git.proxmox.com/git/proxmox-backup.git'
                             sh '''
                                 . "$HOME/.cargo/env" &&
-                                ls -la &&
                                 rm -rf .cargo &&
-                                ls -la &&
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml &&
-                                cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
+                                cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
                     }
