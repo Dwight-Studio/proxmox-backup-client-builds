@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Check if need build') {
             steps {
-                sh 'rm -rf * .*'
+                sh 'rm -rf * .* &> /dev/null'
                 dir('proxmox-backup') {
                     git 'git://git.proxmox.com/git/proxmox-backup.git'
                     script {
