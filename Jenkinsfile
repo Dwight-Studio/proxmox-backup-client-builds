@@ -76,10 +76,7 @@ pipeline {
                                 . "$HOME/.cargo/env"
                                 rm -rf .cargo
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
-                                cat > $HOME/.cargo/config.toml <<'EOF'
-                                [source.crates-io]
-                                registry = "https://github.com/rust-lang/crates.io-index"
-                                EOF
+                                export CARGO_REGISTRIES_MY_REGISTRY_INDEX=https://github.com/rust-lang/crates.io-index
                                 cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
