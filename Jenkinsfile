@@ -78,7 +78,7 @@ pipeline {
                                 . "$HOME/.cargo/env"
                                 rm -rf .cargo
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
-                                cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
+                                cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
                     }
