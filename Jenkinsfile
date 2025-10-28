@@ -71,7 +71,6 @@ pipeline {
                         }
                         dir('proxmox-fuse') {
                             git 'git://git.proxmox.com/git/proxmox-fuse.git'
-                            sh 'sed -ri "/MAKE_ACCESSORS(noflush)/d" ./src/glue.c'
                         }
                         dir('proxmox-backup') {
                             sh '''
