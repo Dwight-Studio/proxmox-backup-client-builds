@@ -12,12 +12,14 @@ pipeline {
     stages {
         stage('Check if need build') {
             steps {
-                git 'git://git.proxmox.com/git/proxmox-backup.git'
-                script {
-                    env.VERSION = sh (
-                        script: 'grep "^version =" Cargo.toml | sed -r "s/(version = |\\")//g"',
-                        returnStdout: true
-                    ).trim()
+                dir('proxmox-backup') {
+                    git 'git://git.proxmox.com/git/proxmox-backup.git'
+                    script {
+                        env.VERSION = sh (
+                            script: 'grep "^version =" Cargo.toml | sed -r "s/(version = |\\")//g"',
+                            returnStdout: true
+                        ).trim()
+                    }
                 }
                 echo "Found version ${VERSION}"
                 withCredentials([usernamePassword(credentialsId: '37caf116-0ecf-4870-b2a0-29ab0ebb0573', passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
@@ -71,12 +73,10 @@ pipeline {
                             sh 'sed -ri "/MAKE_ACCESSORS(noflush)/d" ./src/glue.c'
                         }
                         dir('proxmox-backup') {
-                            git 'git://git.proxmox.com/git/proxmox-backup.git'
                             sh '''
                                 . "$HOME/.cargo/env"
                                 rm -rf .cargo
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
-                                export CARGO_REGISTRIES_MY_REGISTRY_INDEX=https://github.com/rust-lang/crates.io-index
                                 cargo build --release --verbose --verbose --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
                             '''
                         }
