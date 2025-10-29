@@ -95,7 +95,7 @@ pipeline {
                                 mv ../proxmox-backup/target/release/{proxmox-backup-client,pxar} ./proxmox-backup-client-$VERSION
                                 tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
                             '''
-                            archiveArtifacts artifacts: 'proxmox-backup-client-$VERSION.tar.gz', fingerprint: true
+                            archiveArtifacts artifacts: "proxmox-backup-client-${VERSION}.tar.gz", fingerprint: true
                         }
                     }
                 }
