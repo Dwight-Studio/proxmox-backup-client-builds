@@ -36,7 +36,7 @@ pipeline {
                         } else {
                             echo "Version ${VERSION} found, aborting build."
                             currentBuild.result = 'ABORTED'
-                            return
+                            error "Aborting early, see reason above"
                         }
                     }
                 }
