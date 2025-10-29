@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'rm -rf * .* || true'
                 dir('proxmox-backup') {
-                    git 'git://git.proxmox.com/git/proxmox-backup.git'
+                    git changelog: false, poll: false, url: 'git://git.proxmox.com/git/proxmox-backup.git'
                     script {
                         env.VERSION = sh (
                             script: 'grep "^version =" Cargo.toml | sed -r "s/(version = |\\")//g"',
@@ -54,22 +54,25 @@ pipeline {
                             . "$HOME/.cargo/env"
                             rustup override set 1.88.0
                         '''
+                        dir('pbc') {
+                            git branch: 'main', changelog: false, credentialsId: '37caf116-0ecf-4870-b2a0-29ab0ebb0573', poll: false, url: 'https://github.com/Dwight-Studio/proxmox-backup-client-builds.git'
+                        }
                     }
                 }
 
                 stage('Build') {
                     steps {
                         dir('pathpatterns') {
-                            git 'git://git.proxmox.com/git/pathpatterns.git'
+                            git changelog: false, poll: false, url: 'git://git.proxmox.com/git/pathpatterns.git'
                         }
                         dir('proxmox') {
-                            git 'git://git.proxmox.com/git/proxmox.git'
+                            git changelog: false, poll: false, url: 'git://git.proxmox.com/git/proxmox.git'
                         }
                         dir('pxar') {
-                            git 'git://git.proxmox.com/git/pxar.git'
+                            git changelog: false, poll: false, url: 'git://git.proxmox.com/git/pxar.git'
                         }
                         dir('proxmox-fuse') {
-                            git 'git://git.proxmox.com/git/proxmox-fuse.git'
+                            git changelog: false, poll: false, url: 'git://git.proxmox.com/git/proxmox-fuse.git'
                             sh 'sed -ri "/MAKE_ACCESSORS\\(noflush\\)/d" src/glue.c'
                         }
                         dir('proxmox-backup') {
@@ -91,6 +94,9 @@ pipeline {
                                 mkdir proxmox-backup-client-$VERSION
                                 mv ../proxmox-backup/target/release/{proxmox-backup-client,pxar} ./proxmox-backup-client-$VERSION
                                 tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
+                                mv proxmox-backup-client-$VERSION.tar.gz rpmbuild/SOURCES
+                                cp ../pbc/proxmox-backup-client.spec rpmbuild/SPECS
+                                rpmbuild --define "_topdir `pwd`/rpmbuild" -bs SPECS/proxmox-backup-client.spec
                             '''
                         }
                     }
