@@ -15,8 +15,8 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_bindir}
-cp %{name} pxar $RPM_BUILD_ROOT/%{_bindir}
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+cp %{name} pxar $RPM_BUILD_ROOT%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
