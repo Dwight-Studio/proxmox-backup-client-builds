@@ -49,7 +49,7 @@ pipeline {
                     steps {
                         sh '''
                             dnf update -y
-                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel rpmdevtools gettext
+                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel
                             curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
                             . "$HOME/.cargo/env"
                             rustup override set 1.88.0
@@ -94,10 +94,8 @@ pipeline {
                                 mkdir proxmox-backup-client-$VERSION
                                 mv ../proxmox-backup/target/release/{proxmox-backup-client,pxar} ./proxmox-backup-client-$VERSION
                                 tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
-                                mv proxmox-backup-client-$VERSION.tar.gz rpmbuild/SOURCES
-                                envsubst < ../pbc/proxmox-backup-client.spec > rpmbuild/SPECS/proxmox-backup-client.spec
-                                rpmbuild --define "_topdir `pwd`/rpmbuild" -bs rpmbuild/SPECS/proxmox-backup-client.spec
                             '''
+                            archiveArtifacts artifacts: 'proxmox-backup-client-$VERSION.tar.gz', fingerprint: true
                         }
                     }
                 }
