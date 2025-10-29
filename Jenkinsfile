@@ -41,19 +41,22 @@ pipeline {
                 }
             }
         }
+
         stage('Build on Rocky Linux 8') {
             stages {
+
                 stage('Setup') {
                     steps {
                         sh '''
                             dnf update -y
-                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel
+                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel rpmdevtools
                             curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
                             . "$HOME/.cargo/env"
                             rustup override set 1.88.0
                         '''
                     }
                 }
+
                 stage('Build') {
                     steps {
                         dir('pathpatterns') {
@@ -75,6 +78,19 @@ pipeline {
                                 rm -rf .cargo
                                 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\\1/" Cargo.toml
                                 cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
+                            '''
+                        }
+                    }
+                }
+
+                stage('Deploy') {
+                    steps {
+                        dir('deployment') {
+                            sh '''
+                                mkdir -p rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+                                mkdir proxmox-backup-client-$VERSION
+                                mv ../proxmox-backup/target/release/{proxmox-backup-client,pxar} ./proxmox-backup-client-$VERSION
+                                tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
                             '''
                         }
                     }
