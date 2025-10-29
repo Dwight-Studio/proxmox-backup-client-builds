@@ -25,10 +25,10 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 
 %prep
 %setup -c
-%setup -c -T -D -a 1
-%setup -c -T -D -a 2
-%setup -c -T -D -a 3
-%setup -c -T -D -a 4
+%setup -T -D -a 1
+%setup -T -D -a 2
+%setup -T -D -a 3
+%setup -T -D -a 4
 sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
 rm -rf proxmox-backup/.cargo
 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
