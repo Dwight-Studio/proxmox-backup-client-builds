@@ -11,7 +11,6 @@ Source2:        proxmox.tar.gz
 Source3:        pxar.tar.gz
 Source4:        proxmox-fuse.tar.gz
 
-BuildRequires: git
 BuildRequires: gcc
 BuildRequires: openssl-devel
 BuildRequires: systemd-devel
@@ -25,7 +24,7 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 %global debug_package %{nil}
 
 %prep
-%setup
+%setup -c
 sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
 rm -rf proxmox-backup/.cargo
 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
