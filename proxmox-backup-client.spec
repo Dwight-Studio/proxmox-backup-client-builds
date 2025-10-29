@@ -5,8 +5,11 @@ Summary:	    Proxmox Backup Client
 License:	    AGPL-3.0-or-later
 URL:		    https://git.proxmox.com/?p=proxmox-backup.git
 ExclusiveArch:	x86_64
-Source0:	    ""
-NoSource:	    0
+Source0:	    proxmox-backup.tar.gz
+Source1:        pathpatterns.tar.gz
+Source2:        proxmox.tar.gz
+Source3:        pxar.tar.gz
+Source4:        proxmox-fuse.tar.gz
 
 BuildRequires: git
 BuildRequires: gcc
@@ -22,13 +25,7 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 %global debug_package %{nil}
 
 %prep
-%setup -T -c
-git clone git://git.proxmox.com/git/proxmox-backup.git
-git clone git://git.proxmox.com/git/pathpatterns.git
-git clone git://git.proxmox.com/git/proxmox.git
-git clone git://git.proxmox.com/git/pxar.git
-git clone git://git.proxmox.com/git/proxmox-fuse.git
-
+%setup
 sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
 rm -rf proxmox-backup/.cargo
 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
