@@ -95,8 +95,7 @@ pipeline {
                                 mv ../proxmox-backup/target/release/{proxmox-backup-client,pxar} ./proxmox-backup-client-$VERSION
                                 tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
                                 mv proxmox-backup-client-$VERSION.tar.gz rpmbuild/SOURCES
-                                cp ../pbc/proxmox-backup-client.spec rpmbuild/SPECS
-                                envsubst < rpmbuild/SPECS/proxmox-backup-client.spec > rpmbuild/SPECS/proxmox-backup-client.spec
+                                envsubst < ../pbc/proxmox-backup-client.spec > rpmbuild/SPECS/proxmox-backup-client.spec
                                 rpmbuild --define "_topdir `pwd`/rpmbuild" -bs rpmbuild/SPECS/proxmox-backup-client.spec
                             '''
                         }
