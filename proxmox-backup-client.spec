@@ -4,8 +4,17 @@ Release:        1
 Summary:        Proxmox Backup Client
 License:        AGPL-3.0-or-later
 URL:            https://git.proxmox.com/?p=proxmox-backup.git
-Source0:        %{name}-%{version}.tar.gz
 BuildArch:      x86_64
+
+BuildRequires: git
+BuildRequires: gcc
+BuildRequires: openssl-devel
+BuildRequires: systemd-devel
+BuildRequires: libacl-devel
+BuildRequires: fuse3-devel
+BuildRequires: libuuid-devel
+BuildRequires: rust <= 1.88, rust > 1.81
+BuildRequires: cargo
 
 %description
 Proxmox Backup Client for Proxmox Backup Server built for RPM based distributions.
@@ -13,12 +22,25 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 %global debug_package %{nil}
 
 %prep
-%setup -q
+%setup -c
+git clone git://git.proxmox.com/git/proxmox-backup.git
+git clone git://git.proxmox.com/git/pathpatterns.git
+git clone git://git.proxmox.com/git/proxmox.git
+git clone git://git.proxmox.com/git/pxar.git
+git clone git://git.proxmox.com/git/proxmox-fuse.git
+
+sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
+rm -rf proxmox-backup/.cargo
+sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
+
+%build
+cd proxmox-backup
+cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
 
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_bindir}
-cp %{name} pxar %{buildroot}%{_bindir}
+install -m 755 proxmox-backup/target/release/%{name} %{buildroot}%{_bindir}
+install -m 755 proxmox-backup/target/release/pxar %{buildroot}%{_bindir}
 
 %clean
 rm -rf %{buildroot}
