@@ -31,12 +31,11 @@ pipeline {
                             customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: "Bearer $GITHUB_TOKEN"], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']],
                             validResponseCodes: "200,404"
                         )
-                        if (response.status != 404) {
+                        if (response.status == 404) {
                             echo "Version ${VERSION} not found in releases, building..."
                         } else {
-                            echo "Version ${VERSION} found, aborting build."
                             currentBuild.result = 'ABORTED'
-                            error "Aborting early, see reason above"
+                            error "Aborting early: Version ${VERSION} found, aborting build."
                         }
                     }
                 }
