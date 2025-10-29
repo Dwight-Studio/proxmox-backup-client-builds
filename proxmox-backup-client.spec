@@ -11,6 +11,7 @@ Source2:        proxmox.tar.gz
 Source3:        pxar.tar.gz
 Source4:        proxmox-fuse.tar.gz
 
+BuildRequires: git
 BuildRequires: gcc
 BuildRequires: openssl-devel
 BuildRequires: systemd-devel
