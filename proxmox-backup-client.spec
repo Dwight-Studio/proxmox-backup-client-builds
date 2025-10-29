@@ -17,7 +17,6 @@ BuildRequires: systemd-devel
 BuildRequires: libacl-devel
 BuildRequires: fuse3-devel
 BuildRequires: libuuid-devel
-BuildRequires: tree
 
 %description
 Proxmox Backup Client for Proxmox Backup Server built for RPM based distributions.
@@ -26,7 +25,7 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 
 %prep
 %setup -c
-tree
+ls -la
 sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
 rm -rf proxmox-backup/.cargo
 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
