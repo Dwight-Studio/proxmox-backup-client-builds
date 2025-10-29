@@ -96,6 +96,14 @@ pipeline {
                                 tar --create --file proxmox-backup-client-$VERSION.tar.gz proxmox-backup-client-$VERSION
                             '''
                             archiveArtifacts artifacts: "proxmox-backup-client-${VERSION}.tar.gz", fingerprint: true
+                            withCredentials([string(credentialsId: 'bc758890-fdce-4b66-981c-875025c9a254', variable: 'WEBHOOK_URL')]) {
+                                httpRequest(
+                                    contentType: 'TEXT_PLAIN', 
+                                    httpMode: 'POST', 
+                                    requestBody: "${BUILD_URL}/artifact/proxmox-backup-client-${VERSION}.tar.gz:${VERSION}", 
+                                    url: "${WEBHOOK_URL}", 
+                                )
+                            }
                         }
                     }
                 }
