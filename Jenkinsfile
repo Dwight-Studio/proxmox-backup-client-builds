@@ -49,7 +49,7 @@ pipeline {
                     steps {
                         sh '''
                             dnf update -y
-                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel rpmdevtools
+                            dnf install -y git gcc openssl-devel systemd-devel libacl-devel fuse3-devel libuuid-devel rpmdevtools gettext
                             curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
                             . "$HOME/.cargo/env"
                             rustup override set 1.88.0
