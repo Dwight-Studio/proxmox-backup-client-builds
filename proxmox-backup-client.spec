@@ -5,7 +5,7 @@ Summary:        Proxmox Backup Client
 License:        AGPL-3.0-or-later
 URL:            https://git.proxmox.com/?p=proxmox-backup.git
 BuildArch:      x86_64
-NoSource:       0
+Source:
 
 BuildRequires: git
 BuildRequires: gcc
@@ -23,7 +23,7 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 %global debug_package %{nil}
 
 %prep
-%setup -c
+%setup -T -c
 git clone git://git.proxmox.com/git/proxmox-backup.git
 git clone git://git.proxmox.com/git/pathpatterns.git
 git clone git://git.proxmox.com/git/proxmox.git
