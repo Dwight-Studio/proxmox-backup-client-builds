@@ -100,7 +100,7 @@ pipeline {
                                 httpRequest(
                                     contentType: 'TEXT_PLAIN', 
                                     httpMode: 'POST', 
-                                    requestBody: "${BUILD_URL}/artifact/proxmox-backup-client-${VERSION}.tar.gz:${VERSION}", 
+                                    requestBody: "${BUILD_URL}/artifact/proxmox-backup-client-${VERSION}.tar.gz;${VERSION}", 
                                     url: "${WEBHOOK_URL}", 
                                 )
                             }
