@@ -17,6 +17,7 @@ BuildRequires: systemd-devel
 BuildRequires: libacl-devel
 BuildRequires: fuse3-devel
 BuildRequires: libuuid-devel
+BuildRequires: tree
 
 %description
 Proxmox Backup Client for Proxmox Backup Server built for RPM based distributions.
