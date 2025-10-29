@@ -10,6 +10,8 @@ BuildArch:      x86_64
 %description
 Proxmox Backup Client for Proxmox Backup Server built for RPM based distributions.
 
+%global debug_package %{nil}
+
 %prep
 %setup -q
 
