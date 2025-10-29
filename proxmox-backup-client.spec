@@ -37,7 +37,7 @@ curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-t
 
 %build
 cd proxmox-backup
-cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
+PATH=$PATH:$HOME/.cargo/bin cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
 
 %install
 mkdir -p %{buildroot}%{_bindir}
