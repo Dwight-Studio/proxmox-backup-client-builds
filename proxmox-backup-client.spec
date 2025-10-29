@@ -5,7 +5,8 @@ Summary:        Proxmox Backup Client
 License:        AGPL-3.0-or-later
 URL:            https://git.proxmox.com/?p=proxmox-backup.git
 ExclusiveArch:  x86_64
-NoSource:
+Source0:         0
+NoSource:       0
 
 BuildRequires: git
 BuildRequires: gcc
@@ -44,8 +45,7 @@ mkdir -p %{buildroot}%{_bindir}
 install -m 755 proxmox-backup/target/release/%{name} %{buildroot}%{_bindir}
 install -m 755 proxmox-backup/target/release/pxar %{buildroot}%{_bindir}
 
-%clean
-rm -rf %{buildroot}
+%check
 
 %files
 %{_bindir}/%{name}
