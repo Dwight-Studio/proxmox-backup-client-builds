@@ -4,7 +4,7 @@ Release:        1
 Summary:        Proxmox Backup Client
 License:        AGPL-3.0-or-later
 URL:            https://git.proxmox.com/?p=proxmox-backup.git
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 NoSource:
 
 BuildRequires: git
