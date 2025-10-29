@@ -18,6 +18,7 @@ BuildRequires: systemd-devel
 BuildRequires: libacl-devel
 BuildRequires: fuse3-devel
 BuildRequires: libuuid-devel
+BuildRequires: curl
 
 %description
 Proxmox Backup Client for Proxmox Backup Server built for RPM based distributions.
@@ -33,10 +34,10 @@ Proxmox Backup Client for Proxmox Backup Server built for RPM based distribution
 sed -ri "/MAKE_ACCESSORS\(noflush\)/d" proxmox-fuse/src/glue.c
 rm -rf proxmox-backup/.cargo
 sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
-curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain 1.88.0 -y
-. "$HOME/.cargo/env"
 
 %build
+curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain 1.88.0 -y
+. "$HOME/.cargo/env"
 cd proxmox-backup
 PATH=$PATH:$HOME/.cargo/bin cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
 
