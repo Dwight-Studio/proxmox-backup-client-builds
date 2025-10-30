@@ -49,7 +49,7 @@ pipeline {
                         contentType: 'APPLICATION_JSON',
                         customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: "Bearer $GITHUB_TOKEN"], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']], 
                         httpMode: 'POST',
-                        requestBody: '{"tag_name":"${VERSION}","name":"${VERSION}"}',
+                        requestBody: '{"tag_name":"$VERSION","name":"$VERSION"}',
                         url: 'https://api.github.com/repos/Dwight-Studio/proxmox-backup-client-builds/releases',
                         validResponseCodes: '200'
                     )
