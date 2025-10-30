@@ -39,7 +39,7 @@ sed -ri "s/^#(proxmox|pbs|pathpatterns|pxar)/\1/" proxmox-backup/Cargo.toml
 curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain 1.88.0 -y
 . "$HOME/.cargo/env"
 cd proxmox-backup
-PATH=$PATH:$HOME/.cargo/bin PKG_CONFIG_PATH="/usr/lib64/pkgconfig:$PKG_CONFIG_PATH" cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
+PATH=$PATH:$HOME/.cargo/bin PKG_CONFIG_PATH=/usr/lib64/pkgconfig:$PKG_CONFIG_PATH cargo build --release --package proxmox-backup-client --bin proxmox-backup-client --package pxar-bin --bin pxar
 
 %install
 mkdir -p %{buildroot}%{_bindir}
