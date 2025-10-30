@@ -1,5 +1,13 @@
 # proxmox-backup-client-builds
-Automatic building of proxmox-backup-client from source for RPM based distributions
+Automatic building of proxmox-backup-client from source for x86_64 RPM based distributions.
+
+# Installation
+Installing the proxmox-backup-client package is very easy:
+```bash
+sudo dnf install dnf-plugins-core # You might already have this
+sudo dnf copr enable dwight-studio/proxmox-backup-client
+sudo dnf install proxmox-backup-client
+```
 
 # Distribution availability
 Currently (version 4.0.18), the package is available in the following targets:
@@ -79,14 +87,6 @@ Currently (version 4.0.18), the package is available in the following targets:
 | RHEL 10 | ✅ |
 | RHEL 8 | ✅ |
 | RHEL 9 | ✅ |
-
-# Installation
-Installing the proxmox-backup-client package is very easy:
-```bash
-sudo dnf install dnf-plugins-core # You might already have this
-sudo dnf copr enable dwight-studio/proxmox-backup-client
-sudo dnf install proxmox-backup-client
-```
 
 # Disclaimer
 This project is **not affiliated** with Proxmox in any way. You are using these builds **AT YOUR OWN RISK**. We are not reponsible of any issue you might encounter.
