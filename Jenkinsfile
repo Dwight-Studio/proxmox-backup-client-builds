@@ -42,6 +42,21 @@ pipeline {
             }
         }
 
+        stage('Publish release on Github') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: '37caf116-0ecf-4870-b2a0-29ab0ebb0573', passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
+                    httpRequest(
+                        contentType: 'APPLICATION_JSON',
+                        customHeaders: [[maskValue: false, name: 'Accept', value: 'application/vnd.github+json'], [maskValue: true, name: 'Authorization', value: "Bearer $GITHUB_TOKEN"], [maskValue: false, name: 'X-GitHub-Api-Version', value: '2022-11-28']], 
+                        httpMode: 'POST',
+                        requestBody: '{"tag_name":"${VERSION}","name":"${VERSION}"}',
+                        url: 'https://api.github.com/repos/Dwight-Studio/proxmox-backup-client-builds/releases',
+                        validResponseCodes: '200'
+                    )
+                }
+            }
+        }
+
         stage('Run build on Copr') {
             steps {
                 withCredentials([string(credentialsId: 'bc758890-fdce-4b66-981c-875025c9a254', variable: 'WEBHOOK_URL')]) {
@@ -49,7 +64,7 @@ pipeline {
                         contentType: 'TEXT_PLAIN', 
                         httpMode: 'POST', 
                         requestBody: "${VERSION}", 
-                        url: "${WEBHOOK_URL}", 
+                        url: "${WEBHOOK_URL}",
                     )
                 }
             }
