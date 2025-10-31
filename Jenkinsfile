@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'rm -rf * .* || true'
                 dir('proxmox-backup') {
-                    git changelog: false, poll: false, url: 'git://git.proxmox.com/git/proxmox-backup.git'
+                    git changelog: false, url: 'git://git.proxmox.com/git/proxmox-backup.git'
                     script {
                         env.VERSION = sh (
                             script: 'grep "^version =" Cargo.toml | sed -r "s/(version = |\\")//g"',
