@@ -11,6 +11,8 @@ sudo dnf install proxmox-backup-client
 
 # Distribution availability
 Currently (version 4.0.18), the package is available in the following targets:
+> [!WARNING]  
+> The following list might be irrelevant. Consider checking on our [Fedora Copr](https://copr.fedorainfracloud.org/coprs/dwight-studio/proxmox-backup-client/builds/) for more details.
 
 ## <img src="https://miro.medium.com/v2/1*WzXKURvs7JRfRKtO-xskgw.png" height="20"> Amazon Linux
 
