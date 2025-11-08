@@ -1,5 +1,5 @@
 # proxmox-backup-client-builds
-Automatic building of proxmox-backup-client from source for x86_64 RPM based distributions.
+Fully automated building of proxmox-backup-client from source for x86_64 RPM based distributions.
 
 # Installation
 Installing the proxmox-backup-client package is very easy:
@@ -10,7 +10,7 @@ sudo dnf install proxmox-backup-client
 ```
 
 # Distribution availability
-Currently (version 4.0.18), the package is available in the following targets:
+Currently (version 4.0.19), the package is available in the following targets:
 > [!WARNING]  
 > The following list might be irrelevant. Consider checking on our [Fedora Copr](https://copr.fedorainfracloud.org/coprs/dwight-studio/proxmox-backup-client/builds/) for more details.
 
@@ -97,7 +97,7 @@ If you think there is an issue with the build itself, then you can open an issue
 > [!IMPORTANT]  
 > Because the build process is completely automated, it might be possible that a version that is listed in the Releases section is not yet built or has errored out while building.
 > 
-> We are trying our best to maintain the process in a working state. But some dependencies needed to build the project can change and cause the build to fail.
+> We are doing our best to maintain the process in a working state. But some dependencies needed to build the project can change and cause the build to fail.
 
 # License 
 The proxmox-backup-client project is under the **AGPL-3.0 license**, so is this repository and this project. You can find a copy of it [here](LICENSE).
