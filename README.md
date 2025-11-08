@@ -94,6 +94,10 @@ Currently (version 4.0.18), the package is available in the following targets:
 This project is **not affiliated** with Proxmox in any way. You are using these builds **AT YOUR OWN RISK**. We are not reponsible of any issue you might encounter.
 
 If you think there is an issue with the build itself, then you can open an issue on this repository.
+> [!IMPORTANT]  
+> Because the build process is completely automated, it might be possible that a version that is listed in the Releases section is not yet built or has errored out while building.
+> 
+> We are trying our best to maintain the process in a working state. But some dependencies needed to build the project can change and cause the build to fail.
 
 # License 
 The proxmox-backup-client project is under the **AGPL-3.0 license**, so is this repository and this project. You can find a copy of it [here](LICENSE).
